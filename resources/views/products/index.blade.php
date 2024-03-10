@@ -17,7 +17,10 @@
                                         <span class="text-xs leading-4 font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">{{ __('Name') }}</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 dark:bg-gray-600 text-left">
-                                        <span class="text-xs leading-4 font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">{{ __('Price') }}</span>
+                                        <span class="text-xs leading-4 font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">{{ __('Price') }} (USD)</span>
+                                    </th>
+                                    <th class="px-6 py-3 bg-gray-50 dark:bg-gray-600 text-left">
+                                        <span class="text-xs leading-4 font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">{{ __('Price') }} (COP)</span>
                                     </th>
                                 </tr>
                             </thead>
@@ -29,7 +32,10 @@
                                             {{ $product->name }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 dark:text-gray-100">
-                                            ${{ number_format($product->price, 2) }}
+                                            US$ {{ number_format($product->price, 2) }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 dark:text-gray-100">
+                                            $ {{ number_format($product->price_cop, 2) }}
                                         </td>
                                     </tr>
                                 @empty
