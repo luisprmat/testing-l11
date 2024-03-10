@@ -25,14 +25,10 @@ test('homepage contains non empty table', function () {
 });
 
 test('paginated products table doesn\'t contain 11th record', function () {
-    for ($i = 1; $i <= 11; $i++) {
-        $product = Product::create([
-            'name' => 'Product '.$i,
-            'price' => rand(100, 999),
-        ]);
-    }
+    $products = Product::factory(11)->create();
+    $lastProduct = $products->last();
 
     get('/products')
         ->assertStatus(200)
-        ->assertViewHas('products', fn (LengthAwarePaginator $collection) => $collection->doesntContain($product));
+        ->assertViewHas('products', fn (LengthAwarePaginator $collection) => $collection->doesntContain($lastProduct));
 });
