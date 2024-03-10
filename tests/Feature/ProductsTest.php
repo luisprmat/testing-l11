@@ -18,5 +18,6 @@ test('homepage contains non empty table', function () {
 
     get('/products')
         ->assertStatus(200)
-        ->assertDontSee(__('No products found'));
+        ->assertDontSee(__('No products found'))
+        ->assertSee('Product 1');
 });
