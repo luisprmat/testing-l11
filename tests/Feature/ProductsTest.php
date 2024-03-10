@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Product;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 use function Pest\Laravel\get;
 
@@ -21,5 +21,18 @@ test('homepage contains non empty table', function () {
         ->assertStatus(200)
         ->assertDontSee(__('No products found'))
         ->assertSee('Product 1')
-        ->assertViewHas('products', fn (Collection $collection) => $collection->contains($product));
+        ->assertViewHas('products', fn (LengthAwarePaginator $collection) => $collection->contains($product));
+});
+
+test('paginated products table doesn\'t contain 11th record', function () {
+    for ($i = 1; $i <= 11; $i++) {
+        $product = Product::create([
+            'name' => 'Product '.$i,
+            'price' => rand(100, 999),
+        ]);
+    }
+
+    get('/products')
+        ->assertStatus(200)
+        ->assertViewHas('products', fn (LengthAwarePaginator $collection) => $collection->doesntContain($product));
 });
