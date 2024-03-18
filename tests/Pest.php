@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -42,7 +43,11 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function asAdmin(): TestCase
 {
-    // ..
+    $user = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    return test()->actingAs($user);
 }

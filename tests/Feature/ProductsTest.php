@@ -42,9 +42,7 @@ test('paginated products table doesn\'t contain 11th record', function () {
 });
 
 test('admin can see products create button', function () {
-    $admin = User::factory()->create(['is_admin' => true]);
-
-    actingAs($admin)
+    asAdmin()
         ->get('products')
         ->assertStatus(200)
         ->assertSee(__('Add new product'));
@@ -58,9 +56,7 @@ test('non admin cannot see products create button', function () {
 });
 
 test('admin can access product create page', function () {
-    $admin = User::factory()->create(['is_admin' => true]);
-
-    actingAs($admin)
+    asAdmin()
         ->get('/products/create')
         ->assertStatus(200);
 });
