@@ -8,8 +8,14 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Route::resource('products', ProductController::class)
-    ->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::get('products', [ProductController::class, 'index'])->name('products.index');
+
+    Route::middleware('is_admin')->group(function () {
+        Route::get('products/create', [ProductController::class, 'create'])->name('products.create');
+        Route::post('products', [ProductController::class, 'store'])->name('products.store');
+    });
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

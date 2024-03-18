@@ -9,6 +9,12 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="overflow-hidden overflow-x-auto p-6 text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-0">
+                    @if (auth()->user()->is_admin)
+                        <x-button-link :href="route('products.create')" class="mb-4">
+                            {{ __('Add new product') }}
+                        </x-button-link>
+                    @endif
+
                     <div class="mb-4 min-w-full overflow-hidden overflow-x-auto align-middle sm:rounded-md border dark:border-gray-600">
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-500">
                             <thead>
