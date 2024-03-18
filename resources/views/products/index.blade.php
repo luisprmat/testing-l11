@@ -28,6 +28,10 @@
                                     <th class="px-6 py-3 bg-gray-50 dark:bg-gray-600 text-left">
                                         <span class="text-xs leading-4 font-medium uppercase tracking-wider text-gray-500 dark:text-gray-300">{{ __('Price') }} (COP)</span>
                                     </th>
+                                    @if (auth()->user()->is_admin)
+                                        <th class="px-6 py-3 bg-gray-50 dark:bg-gray-600 text-left">
+                                        </th>
+                                    @endif
                                 </tr>
                             </thead>
 
@@ -43,6 +47,13 @@
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 dark:text-gray-100">
                                             $ {{ number_format($product->price_cop, 2) }}
                                         </td>
+                                        @if (auth()->user()->is_admin)
+                                            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 dark:text-gray-100">
+                                                <x-button-link :href="route('products.edit', $product)">
+                                                    {{ __('Edit') }}
+                                                </x-button-link>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @empty
                                     <tr class="bg-white dark:bg-gray-900">
