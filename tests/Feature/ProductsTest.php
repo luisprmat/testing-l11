@@ -40,3 +40,33 @@ test('paginated products table doesn\'t contain 11th record', function () {
         ->assertStatus(200)
         ->assertViewHas('products', fn (LengthAwarePaginator $collection) => $collection->doesntContain($lastProduct));
 });
+
+test('admin can see products create button', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+
+    actingAs($admin)
+        ->get('products')
+        ->assertStatus(200)
+        ->assertSee(__('Add new product'));
+});
+
+test('non admin cannot see products create button', function () {
+    actingAs($this->user)
+        ->get('products')
+        ->assertStatus(200)
+        ->assertDontSee(__('Add new product'));
+});
+
+test('admin can access product create page', function () {
+    $admin = User::factory()->create(['is_admin' => true]);
+
+    actingAs($admin)
+        ->get('/products/create')
+        ->assertStatus(200);
+});
+
+test('non admin cannot access product create page', function () {
+    actingAs($this->user)
+        ->get('/products/create')
+        ->assertStatus(403);
+});
