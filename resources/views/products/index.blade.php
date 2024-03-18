@@ -38,20 +38,27 @@
                             <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-500 divide-solid">
                                 @forelse($products as $product)
                                     <tr class="bg-white dark:bg-gray-900">
-                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 dark:text-gray-100">
+                                        <td class="px-6 py-4 text-sm leading-5 text-gray-900 dark:text-gray-100">
                                             {{ $product->name }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 dark:text-gray-100">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm leading-5 text-gray-900 dark:text-gray-100">
                                             US$ {{ number_format($product->price, 2) }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 dark:text-gray-100">
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm leading-5 text-gray-900 dark:text-gray-100">
                                             $ {{ number_format($product->price_cop, 2) }}
                                         </td>
                                         @if (auth()->user()->is_admin)
-                                            <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 dark:text-gray-100">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm leading-5 text-gray-900 dark:text-gray-100">
                                                 <x-button-link :href="route('products.edit', $product)">
                                                     {{ __('Edit') }}
                                                 </x-button-link>
+                                                <form action="{{ route('products.destroy', $product) }}" method="POST" class="inline-block">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <x-danger-button onclick="return confirm('{{ __('Are you sure?') }}')">
+                                                        {{ __('Delete') }}
+                                                    </x-danger-button>
+                                                </form>
                                             </td>
                                         @endif
                                     </tr>
