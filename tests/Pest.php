@@ -16,6 +16,7 @@ use Tests\TestCase;
 */
 
 uses(TestCase::class, RefreshDatabase::class)->in('Feature');
+uses()->group('api')->in('Feature/Api');
 
 /*
 |--------------------------------------------------------------------------

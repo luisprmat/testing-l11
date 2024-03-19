@@ -6,6 +6,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 use function Pest\Laravel\actingAs;
 
+uses()->group('products');
+
 beforeEach(function () {
     $this->user = User::factory()->create();
 });

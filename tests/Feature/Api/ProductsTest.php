@@ -5,6 +5,8 @@ use App\Models\Product;
 use function Pest\Laravel\getJson;
 use function Pest\Laravel\postJson;
 
+uses()->group('products');
+
 test('api returns products list', function () {
     $product = Product::factory()->create();
 
