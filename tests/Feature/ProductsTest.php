@@ -80,8 +80,8 @@ test('create product successful', function (string $name, int $price) {
     expect($name)->toBe($lastProduct->name)
         ->and($price)->toBe($lastProduct->price);
 })->with([
-    ['Product 1', 123],
-    ['Product 2', 456],
+    'test 1' => ['Product 1', 123],
+    'test 2' => ['Product 2', 456],
 ]);
 
 test('product edit contains correct values', function () {
