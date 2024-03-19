@@ -67,24 +67,22 @@ test('non admin cannot access product create page', function () {
         ->assertStatus(403);
 });
 
-test('create product successful', function () {
-    $product = [
-        'name' => 'Product 123',
-        'price' => 1234,
-    ];
-
+test('create product successful', function (string $name, int $price) {
     asAdmin()
-        ->post('products', $product)
+        ->post('products', compact('name', 'price'))
         ->assertStatus(302)
         ->assertRedirect('products');
 
     // Checks whether the record exists in a certain DB table
-    $this->assertDatabaseHas('products', $product);
+    $this->assertDatabaseHas('products', compact('name', 'price'));
 
     $lastProduct = Product::latest()->first();
-    expect($product['name'])->toBe($lastProduct->name)
-        ->and($product['price'])->toBe($lastProduct->price);
-});
+    expect($name)->toBe($lastProduct->name)
+        ->and($price)->toBe($lastProduct->price);
+})->with([
+    ['Product 1', 123],
+    ['Product 2', 456],
+]);
 
 test('product edit contains correct values', function () {
     $product = Product::factory()->create();
